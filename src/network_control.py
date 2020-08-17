@@ -841,6 +841,14 @@ def main():
                                     # print('found these:', [tr.channel for tr in trs])
                                     continue
 
+                                # Luigia's check for blocked components
+                                try:
+                                    difftr = num.diff(tr)
+                                    trs = [tr for tr in trs if not num.any(difftr)]
+                                except Exception:
+                                    for tr in trs:
+                                        print('Exception with diff operation: %s' % tr)
+
                                 for tr in trs:
                                     cnt_resp = 0
                                     tr.downsample_to(0.1)
@@ -891,6 +899,14 @@ def main():
                                         trs = [tr for tr in trs if tr.channel in [ch_+'N', ch_+'E', ch_+'Z']]
                                     else:
                                       continue
+
+                                    # Luigia's check for blocked components
+                                    try:
+                                        difftr = num.diff(tr)
+                                        trs = [tr for tr in trs if not num.any(difftr)]
+                                    except Exception:
+                                        for tr in trs:
+                                            print('Exception with diff operation: %s' % tr)
 
                                     for tr in trs:
                                         tr.downsample_to(0.1)
